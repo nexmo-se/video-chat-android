@@ -10,6 +10,7 @@ Quick Start
    2. Go to video-chat-android folder
    
   Backend:
+  
    3. Go to backend folder: `cd backend`
 
    4. Run `npm install` to install all dependencies from NPM.
