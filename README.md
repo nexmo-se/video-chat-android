@@ -39,7 +39,7 @@ Quick Start
    publishes an audio-video stream from your device to the session.
 
    12. Run the app on a second client. You can do this by deploying the app to an
-   iOS device and testing it in the simulator at the same time. Or you can use
+   android device and testing it in the simulator at the same time. Or you can use
    Opentok Playground to connect in a browser (see the following
    section).
 
