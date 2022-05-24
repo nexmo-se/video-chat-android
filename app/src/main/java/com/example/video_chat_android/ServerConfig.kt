@@ -15,7 +15,7 @@ object ServerConfig {
    Note that this application will ignore credentials in the `OpenTokConfig` file when `CHAT_SERVER_URL` contains a
    valid URL.
    */
-    const val CHAT_SERVER_URL: String = "https://36b5-2001-e68-471d-bf93-447a-8207-f43e-6355.ngrok.io"
+    const val CHAT_SERVER_URL: String = ""
 
     // *** The code below is to validate this configuration file. You do not need to modify it  ***
     fun hasChatServerUrl() = !TextUtils.isEmpty(CHAT_SERVER_URL)
