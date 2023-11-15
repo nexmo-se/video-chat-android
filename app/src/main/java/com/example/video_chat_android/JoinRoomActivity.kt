@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -30,10 +31,12 @@ class JoinRoomActivity : AppCompatActivity(), PermissionCallbacks {
     private lateinit var subscriberViewContainer: FrameLayout
     private lateinit var actionButtonViewContainer: FrameLayout
     private lateinit var videoMainViewContainer: FrameLayout
+    private lateinit var liveCaptionButton: ImageButton
     private lateinit var endCallButton: ImageButton
     private lateinit var toggleMicButton: ImageButton
     private lateinit var toggleVideoButton: ImageButton
     private lateinit var switchCameraButton: ImageButton
+    private lateinit var liveCaptionsText: TextView
     private var pressDownStartTime: Long = 0
     private var xDown: Float = 0F
     private var yDown: Float = 0F
@@ -59,9 +62,12 @@ class JoinRoomActivity : AppCompatActivity(), PermissionCallbacks {
         actionButtonViewContainer = findViewById(R.id.flActionButtons)
         videoMainViewContainer = findViewById(R.id.flVideoMainScreen)
 
+        liveCaptionsText = findViewById(R.id.tvLiveCaption)
+
         endCallButton = findViewById(R.id.btEndCall)
         toggleMicButton = findViewById(R.id.btToggleMic)
         toggleVideoButton = findViewById(R.id.btToggleVideo)
+        liveCaptionButton = findViewById(R.id.btLiveCaption)
         switchCameraButton = findViewById(R.id.btCycleCamera)
 
         // View model
@@ -80,6 +86,11 @@ class JoinRoomActivity : AppCompatActivity(), PermissionCallbacks {
                 Log.i(TAG, "subscriber added")
                 subscriberViewContainer.addView(viewModel.subscriber?.view)
             }
+        }
+
+
+        viewModel.liveCaptions.observe(this) {
+            liveCaptionsText.text = it
         }
 
         if(viewModel.session == null) {
@@ -101,6 +112,9 @@ class JoinRoomActivity : AppCompatActivity(), PermissionCallbacks {
         }
         switchCameraButton.setOnClickListener {
             switchCamera()
+        }
+        liveCaptionButton.setOnClickListener {
+            toggleLiveCaption()
         }
 
         publisherViewContainer.setOnTouchListener { _, motionEvent ->
@@ -199,7 +213,7 @@ class JoinRoomActivity : AppCompatActivity(), PermissionCallbacks {
         transition.addTarget(actionButtonViewContainer)
         TransitionManager.beginDelayedTransition(actionButtonViewContainer, transition)
         if (actionButtonViewContainer.visibility == View.VISIBLE) {
-            actionButtonViewContainer.visibility = View.INVISIBLE
+            actionButtonViewContainer.visibility = View.GONE
         }
         else {
             actionButtonViewContainer.visibility = View.VISIBLE
@@ -252,6 +266,11 @@ class JoinRoomActivity : AppCompatActivity(), PermissionCallbacks {
         updateVideoUI()
     }
 
+    private fun toggleLiveCaption() {
+        viewModel.subscriber?.subscribeToCaptions = viewModel.subscriber?.subscribeToCaptions != true
+        updateLiveCaptionUI()
+    }
+
     private fun updateMicUI() {
         if (viewModel.publisher?.publishAudio == true) {
             toggleMicButton.setBackgroundResource(R.drawable.greenroundcorner_bg)
@@ -271,6 +290,19 @@ class JoinRoomActivity : AppCompatActivity(), PermissionCallbacks {
         else {
             toggleVideoButton.setBackgroundResource(R.drawable.redroundcorner_bg)
             toggleVideoButton.setImageResource(R.drawable.ic_video_off)
+        }
+    }
+
+    private fun updateLiveCaptionUI() {
+        if (viewModel.subscriber?.subscribeToCaptions == true) {
+            liveCaptionButton.setBackgroundResource(R.drawable.greenroundcorner_bg)
+            liveCaptionButton.setImageResource(R.drawable.ic_closed_caption_42)
+            liveCaptionsText.visibility = View.VISIBLE
+        }
+        else {
+            liveCaptionButton.setBackgroundResource(R.drawable.redroundcorner_bg)
+            liveCaptionButton.setImageResource(R.drawable.ic_closed_caption_disabled_42)
+            liveCaptionsText.visibility = View.GONE
         }
     }
 
@@ -311,7 +343,7 @@ class JoinRoomActivity : AppCompatActivity(), PermissionCallbacks {
                 viewModel.initRetrofit()
                 val roomName = intent.getStringExtra("roomName")
                 if (roomName != null)
-                viewModel.getSession(roomName)
+                    viewModel.getSession(roomName)
             } else {
                 finishWithMessage("Invalid Server Url")
                 return

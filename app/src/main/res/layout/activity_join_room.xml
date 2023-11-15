@@ -20,11 +20,25 @@
             android:layout_height="match_parent" />
         <FrameLayout
             android:id="@+id/publisher_container"
-            android:layout_width="248px"
-            android:layout_height="330px"
+            android:layout_width="248dp"
+            android:layout_height="330dp"
             android:background="#CCCCCC" />
     </FrameLayout>
-
+    <TextView
+        android:id="@+id/tvLiveCaption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:background="#8888"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintBottom_toTopOf="@+id/flActionButtons" />
     <FrameLayout
         android:id="@+id/flActionButtons"
         android:layout_width="match_parent"
@@ -41,59 +55,71 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="16dp"
+            android:paddingStart="4dp"
             android:paddingTop="24dp"
-            android:paddingEnd="16dp"
+            android:paddingEnd="4dp"
             android:paddingBottom="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
             <ImageButton
+                android:id="@+id/btLiveCaption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/greenroundcorner_bg"
+                android:padding="12dp"
+                android:src="@drawable/ic_closed_caption_42" />
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <ImageButton
                 android:id="@+id/btCycleCamera"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/greenroundcorner_bg"
-                android:padding="18dp"
+                android:padding="12dp"
                 android:src="@drawable/ic_switchcamera" />
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_weight="1"></Space>
+                android:layout_weight="1"/>
 
             <ImageButton
                 android:id="@+id/btToggleVideo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/greenroundcorner_bg"
-                android:padding="18dp"
+                android:padding="12dp"
                 android:src="@drawable/ic_video_on" />
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_weight="1"></Space>
+                android:layout_weight="1" />
 
             <ImageButton
                 android:id="@+id/btToggleMic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/greenroundcorner_bg"
-                android:padding="18dp"
+                android:padding="12dp"
                 android:src="@drawable/ic_mic_on" />
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_weight="1"></Space>
+                android:layout_weight="1"/>
 
             <ImageButton
                 android:id="@+id/btEndCall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/redroundcorner_bg"
-                android:padding="18dp"
-                android:src="@drawable/ic_endcall"></ImageButton>
+                android:padding="12dp"
+                android:src="@drawable/ic_endcall"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </FrameLayout>
 

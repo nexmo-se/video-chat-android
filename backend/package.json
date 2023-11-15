@@ -9,9 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.6.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
-    "opentok": "^2.13.0"
+    "opentok": "^2.13.0",
+    "opentok-jwt": "^0.1.5"
   }
 }

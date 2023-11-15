@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:labelFor="@id/etRoomName"
             android:paddingStart="4dp"
+            android:paddingEnd="4dp"
             android:text="Room Name:" />
 
         <EditText

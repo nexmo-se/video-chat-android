@@ -28,6 +28,7 @@ class JoinRoomActivityViewModel(application: Application) : AndroidViewModel(app
 
     var isPubActive: MutableLiveData<Boolean> = MutableLiveData()
     var isSubActive: MutableLiveData<Boolean> = MutableLiveData()
+    var liveCaptions: MutableLiveData<String> = MutableLiveData()
 
     var fullScreenView = "subscriber"
 
@@ -52,6 +53,7 @@ class JoinRoomActivityViewModel(application: Application) : AndroidViewModel(app
             Log.i(TAG, "onConnected: Connected to session: ${session.sessionId}")
             publisher = Publisher.Builder(application).build()
 
+            publisher?.publishCaptions = true
             publisher?.setPublisherListener(publisherListener)
             publisher?.renderer?.setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE, BaseVideoRenderer.STYLE_VIDEO_FILL)
 
@@ -76,6 +78,7 @@ class JoinRoomActivityViewModel(application: Application) : AndroidViewModel(app
                     )
 
                     it.setSubscriberListener(subscriberListener)
+                    it.setCaptionsListener(subscriberCaptionListener)
                 }
 
                 session.subscribe(subscriber)
@@ -109,6 +112,11 @@ class JoinRoomActivityViewModel(application: Application) : AndroidViewModel(app
             finishWithMessage("SubscriberKit onError: ${opentokError.message}")
         }
     }
+
+    var subscriberCaptionListener: SubscriberKit.CaptionsListener =
+        SubscriberKit.CaptionsListener { subscriber, text, isFinal ->
+            liveCaptions.value = text
+        }
 
      fun initRetrofit() {
         val logging = HttpLoggingInterceptor()
